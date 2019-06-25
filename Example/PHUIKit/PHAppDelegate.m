@@ -9,7 +9,7 @@
 #import "PHAppDelegate.h"
 #import "PHViewController.h"
 
-@interface PHAppDelegate ()
+@interface PHAppDelegate()
 
 @property (nonatomic, strong) PHViewController *viewCtrl;
 @property (nonatomic, strong) UINavigationController *navCtrl;
@@ -20,16 +20,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	self.viewCtrl = [[PHViewController alloc] init];
-	self.navCtrl = [[UINavigationController alloc] initWithRootViewController:_viewCtrl];
-	
-	self.window.rootViewController = _navCtrl;
-	
-	self.window.backgroundColor = [UIColor whiteColor];
-	[self.window makeKeyAndVisible];
-	
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    self.viewCtrl = [[PHViewController alloc] init];
+    self.navCtrl = [[UINavigationController alloc] initWithRootViewController:_viewCtrl];
+
+    self.window.rootViewController = _navCtrl;
+
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 

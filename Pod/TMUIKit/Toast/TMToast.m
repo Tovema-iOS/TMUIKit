@@ -9,11 +9,11 @@
 #import "TMToastView.h"
 
 static TMToast *tm_currentToast = nil;
-static NSMutableArray <TMToast *> *tm_toastArray;
+static NSMutableArray<TMToast *> *tm_toastArray;
 static dispatch_semaphore_t tm_toastLock;
 
-@interface TMToast() {
-
+@interface TMToast()
+{
 }
 
 @property (nonatomic, copy) NSString *message;
@@ -23,7 +23,7 @@ static dispatch_semaphore_t tm_toastLock;
 @property (nonatomic, assign) BOOL modal;
 @property (nonatomic, assign) TMToastIndicator indicatorStyle;
 @property (nonatomic, assign) NSTimeInterval showTime;
-@property (nonatomic, weak) UIView * container;
+@property (nonatomic, weak) UIView *container;
 
 @property (nonatomic, strong) TMToastView *messageView;
 
@@ -31,7 +31,8 @@ static dispatch_semaphore_t tm_toastLock;
 
 @implementation TMToast
 
-+ (void)initialize {
++ (void)initialize
+{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         tm_toastArray = [NSMutableArray array];
@@ -53,62 +54,71 @@ static dispatch_semaphore_t tm_toastLock;
     return self;
 }
 
-+ (TMToast * (^)(void))toast {
++ (TMToast * (^)(void))toast
+{
     return ^id() {
         return [TMToast new];
     };
 }
 
-- (TMToast * (^)(NSString *message))setMessage {
+- (TMToast * (^)(NSString *message))setMessage
+{
     return ^id(NSString *message) {
         self.message = message;
         return self;
     };
 }
 
-- (TMToast * (^)(NSTextAlignment textAlignment))setTextAlignment {
+- (TMToast * (^)(NSTextAlignment textAlignment))setTextAlignment
+{
     return ^id(NSTextAlignment textAlignment) {
         self.textAlignment = textAlignment;
         return self;
     };
 }
 
-- (TMToast * (^)(TMToastPosition position))setPosition {
+- (TMToast * (^)(TMToastPosition position))setPosition
+{
     return ^id(TMToastPosition position) {
         self.position = position;
         return self;
     };
 }
 
-- (TMToast * (^)(CGFloat positionYOffset))setPositionYOffset {
+- (TMToast * (^)(CGFloat positionYOffset))setPositionYOffset
+{
     return ^id(CGFloat positionYOffset) {
         self.positionYOffset = positionYOffset;
         return self;
     };
 }
 
-- (TMToast * (^)(NSTimeInterval showTime))setShowTime {
+- (TMToast * (^)(NSTimeInterval showTime))setShowTime
+{
     return ^id(NSTimeInterval showTime) {
         self.showTime = showTime;
         return self;
     };
 }
 
-- (TMToast * (^)(BOOL modal))setModal {
+- (TMToast * (^)(BOOL modal))setModal
+{
     return ^id(BOOL modal) {
         self.modal = modal;
         return self;
     };
 }
 
-- (TMToast * (^)(TMToastIndicator style))setActivityIndicatorStyle {
+- (TMToast * (^)(TMToastIndicator style))setActivityIndicatorStyle
+{
     return ^id(TMToastIndicator style) {
         self.indicatorStyle = style;
         return self;
     };
 }
 
-- (TMToast * (^)(UIView *container))showTo {
+- (TMToast * (^)(UIView *container))showTo
+{
     return ^id(UIView *container) {
         self.container = container;
         [TMToast addToast:self];
@@ -117,28 +127,32 @@ static dispatch_semaphore_t tm_toastLock;
     };
 }
 
-- (void)remove {
+- (void)remove
+{
     [self.messageView removeToast];
     [TMToast removeToast:self];
 }
 
-- (TMToast * (^)(void))clear {
+- (TMToast * (^)(void))clear
+{
     return ^id() {
         [TMToast clear];
         return self;
     };
 }
 
-+ (void)clear {
++ (void)clear
+{
     NSArray<TMToast *> *array = [TMToast clearToast];
-    [array enumerateObjectsUsingBlock:^(TMToast * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [array enumerateObjectsUsingBlock:^(TMToast *_Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
         [obj.messageView removeToast];
     }];
 }
 
 #pragma mark - private
 
-+ (void)showToast {
++ (void)showToast
+{
     TMToast *toast = nil;
 
     dispatch_semaphore_wait(tm_toastLock, DISPATCH_TIME_FOREVER);
@@ -147,40 +161,42 @@ static dispatch_semaphore_t tm_toastLock;
         toast = tm_currentToast;
     }
     dispatch_semaphore_signal(tm_toastLock);
-    
+
     if (!toast) {
         return;
     }
-    
-    toast.messageView = [TMToastView viewForToast:toast removeCompletion:^(TMToast *toast) {
-        [TMToast removeToast:toast];
-        
-        dispatch_semaphore_wait(tm_toastLock, DISPATCH_TIME_FOREVER);
-        if (tm_currentToast == toast) {
-            tm_currentToast = nil;
-        }
-        dispatch_semaphore_signal(tm_toastLock);
-        
-        [TMToast showToast];
-    }];
-    
+
+    toast.messageView = [TMToastView viewForToast:toast
+                                 removeCompletion:^(TMToast *toast) {
+                                     [TMToast removeToast:toast];
+
+                                     dispatch_semaphore_wait(tm_toastLock, DISPATCH_TIME_FOREVER);
+                                     if (tm_currentToast == toast) {
+                                         tm_currentToast = nil;
+                                     }
+                                     dispatch_semaphore_signal(tm_toastLock);
+
+                                     [TMToast showToast];
+                                 }];
+
     if (!toast.container) {
         [toast remove];
         [self performSelectorOnMainThread:@selector(showToast) withObject:nil waitUntilDone:NO];
         return;
     }
-    
+
     [toast.container addSubview:toast.messageView];
-    
 }
 
-+ (void)addToast:(TMToast *)toast {
++ (void)addToast:(TMToast *)toast
+{
     dispatch_semaphore_wait(tm_toastLock, DISPATCH_TIME_FOREVER);
     [tm_toastArray addObject:toast];
     dispatch_semaphore_signal(tm_toastLock);
 }
 
-+ (void)removeToast:(TMToast *)toast {
++ (void)removeToast:(TMToast *)toast
+{
     dispatch_semaphore_wait(tm_toastLock, DISPATCH_TIME_FOREVER);
     [tm_toastArray removeObject:toast];
     if (tm_currentToast == toast) {
@@ -189,7 +205,8 @@ static dispatch_semaphore_t tm_toastLock;
     dispatch_semaphore_signal(tm_toastLock);
 }
 
-+ (NSArray<TMToast *> *)clearToast {
++ (NSArray<TMToast *> *)clearToast
+{
     dispatch_semaphore_wait(tm_toastLock, DISPATCH_TIME_FOREVER);
     NSArray *array = tm_toastArray.copy;
     [tm_toastArray removeAllObjects];

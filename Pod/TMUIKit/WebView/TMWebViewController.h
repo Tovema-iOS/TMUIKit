@@ -16,8 +16,8 @@
 @property (nonatomic, strong, readonly) WKWebView *webView;
 @property (nonatomic, strong, readonly) NSURL *requestURL;
 
-@property (nonatomic, assign) BOOL showWebTitle; // 导航栏是否显示网页标题, default=NO
-@property (nonatomic, assign) BOOL showToolbar; // 是否显示底部 Toolbar, default=YES
+@property (nonatomic, assign) BOOL showWebTitle;  // 导航栏是否显示网页标题, default=NO
+@property (nonatomic, assign) BOOL showToolbar;  // 是否显示底部 Toolbar, default=YES
 
 - (instancetype)init;
 - (instancetype)initWithURL:(NSURL *)url;

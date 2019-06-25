@@ -33,3 +33,4 @@ Carthage
 # Pods/
 Pods/
 Podfile.lock
+.clang-format

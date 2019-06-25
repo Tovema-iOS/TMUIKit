@@ -9,7 +9,7 @@
 
 @class TMToast;
 
-typedef void(^TMToastViewDidRemove)(TMToast *toast);
+typedef void (^TMToastViewDidRemove)(TMToast *toast);
 
 @interface TMToastView : UIView
 
