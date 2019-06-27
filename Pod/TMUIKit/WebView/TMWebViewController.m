@@ -129,7 +129,7 @@
 
     BOOL show = _showToolbar;
     [_toolbar mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.leading.trailing.equalTo(self);
+        make.leading.trailing.equalTo(self.view);
         make.top.equalTo(self.webView.mas_bottom);
 
         if (show) {
