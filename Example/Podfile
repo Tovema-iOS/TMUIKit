@@ -3,7 +3,7 @@ source 'https://github.com/Tovema-iOS/Specs.git'
 platform :ios, 8.0
 
 target 'PHUIKit_Example' do
-    pod "TMUIKit", :path => "../"
+  pod "TMUIKit", :path => "../"
     
     pod 'CYLDeallocBlockExecutor'
 end

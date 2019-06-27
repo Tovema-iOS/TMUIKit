@@ -127,19 +127,23 @@
         return;
     }
 
-    if (_showToolbar) {
-        _toolbar.hidden = NO;
+    BOOL show = _showToolbar;
+    [_toolbar mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.equalTo(self);
+        make.top.equalTo(self.webView.mas_bottom);
 
-        [self.webView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 44, 0));
-        }];
-    } else {
-        _toolbar.hidden = YES;
-
-        [self.webView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-    }
+        if (show) {
+            make.height.mas_equalTo(44);
+            if (@available(iOS 11.0, *)) {
+                make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+            } else {
+                make.bottom.equalTo(self.view);
+            }
+        } else {
+            make.height.mas_equalTo(0);
+            make.bottom.equalTo(self.view);
+        }
+    }];
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector
@@ -174,7 +178,7 @@
     [self createToolBar];
 
     [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 44, 0));
+        make.leading.trailing.top.equalTo(self.view);
     }];
 
     [_lbPromote mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -206,13 +210,7 @@
     _flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
 
     [self showNormalToolbar];
-
-    [_toolbar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(self.view);
-        make.left.equalTo(self.view);
-        make.top.equalTo(self.webView.mas_bottom);
-        make.bottom.equalTo(self.view);
-    }];
+    [self updateToolbar];
 }
 
 - (void)checkNavigationStatus
