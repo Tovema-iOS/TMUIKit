@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
 	s.name             = "TMUIKit"
-	s.version          = "1.0.3"
+	s.version          = "1.0.4"
 	s.summary          = "常用UI库"
 
 	s.description      = "常用UI库 - 支持弹框，下划线，图片按钮，侧滑菜单等。"
