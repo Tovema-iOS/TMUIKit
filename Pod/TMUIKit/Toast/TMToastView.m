@@ -7,7 +7,7 @@
 
 #import "TMToastView.h"
 #import <Masonry/Masonry.h>
-#import <TMCategories/TMCategories.h>
+#import <TMCategories2/TMCategories.h>
 #import <TMUtility/TMUtility.h>
 #import "TMToast.h"
 

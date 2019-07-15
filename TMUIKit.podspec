@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
 	s.name             = "TMUIKit"
-	s.version          = "1.0.2"
+	s.version          = "1.0.3"
 	s.summary          = "常用UI库"
 
 	s.description      = "常用UI库 - 支持弹框，下划线，图片按钮，侧滑菜单等。"
@@ -27,6 +27,6 @@ Pod::Spec.new do |s|
 
     s.dependency 'TMLogger', '~> 1.0'
     s.dependency 'TMUtility', '~> 1.0'
-    s.dependency 'TMCategories', '~> 1.0'
+    s.dependency 'TMCategories2', '~> 1.0'
     s.dependency 'Masonry', '~> 1.1'
 end

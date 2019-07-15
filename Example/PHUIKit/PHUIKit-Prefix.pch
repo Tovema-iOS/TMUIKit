@@ -15,7 +15,7 @@
 @import Foundation;
 
 #import <TMLogger/TMLogger.h>
-#import <TMCategories/TMCategories.h>
+#import <TMCategories2/TMCategories.h>
 #import <TMUtility/TMUtility.h>
 
 #endif

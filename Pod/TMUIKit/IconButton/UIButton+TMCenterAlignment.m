@@ -6,7 +6,7 @@
 //
 
 #import "UIButton+TMCenterAlignment.h"
-#import <TMCategories/TMCategories.h>
+#import <TMCategories2/TMCategories.h>
 #import <objc/runtime.h>
 
 typedef NS_ENUM(NSInteger, TMIconButtonDirection) {

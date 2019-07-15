@@ -8,7 +8,7 @@
 
 #import "TestImageButtonViewController.h"
 #import <TMUIKit/TMUIKit.h>
-#import <TMCategories/TMCategories.h>
+#import <TMCategories2/TMCategories.h>
 #import <Masonry/Masonry.h>
 
 @interface TestImageButtonViewController()
